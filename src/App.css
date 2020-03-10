@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  text-align: -webkit-center;
+
 }
 
 .App-logo {
@@ -35,4 +36,34 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.NavLinksUl {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #0a0d13db;
+  display: flex;
+  justify-content: space-around;
+}
+
+.navLinkLI {
+  float: left;
+
+}
+
+.navLink {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.mainContainer {
+  
+  background-color: #eeeeeef2;
+  height: 50vw;
+  width: 80vw;
+  border-radius: 15px;
 }
