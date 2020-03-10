@@ -5,6 +5,7 @@ import './App.css';
 function App() {
 
   const [events, setEvents] = useState("")
+  const [eventInfo, setEventInfo] = useState("")
 
   useEffect(() => {
 
@@ -20,7 +21,9 @@ function App() {
     const str = events
     console.log(str)
     const parser = new DOMParser()
-    const allEvents = (console.log(parser.parseFromString(str, "text/xml").getElementsByTagName('event')))
+    const allEvents = (parser.parseFromString(str, "text/xml").getElementsByTagName('event'))
+    setEventInfo(allEvents)
+    console.log(eventInfo)
 
   }
 
