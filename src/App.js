@@ -17,15 +17,44 @@ function App() {
 
 )
 
+function xml2json(xmlStr) {
+let children = [...xmlStr.children];
+
+// base case for recursion.
+if (!children.length) {
+return xmlStr.innerHTML
+}
+
+// initializing object to be returned.
+let jsonResult = {};
+
+for (let child of children) {
+
+// checking is child has siblings of same name.
+let childIsArray = children.filter(eachChild => eachChild.nodeName === child.nodeName).length > 1;
+
+// if child is array, save the values as array, else as strings.
+if (childIsArray) {
+  if (jsonResult[child.nodeName] === undefined) {
+    jsonResult[child.nodeName] = [xml2json(child)];
+  } else {
+    jsonResult[child.nodeName].push(xml2json(child));
+  }
+} else {
+  jsonResult[child.nodeName] = xml2json(child);
+}
+}
+
+return jsonResult;
+}
+
   const handleClick = (evt) => {
-    const str = events
-    console.log(str)
     const parser = new DOMParser()
-    const allEvents = (parser.parseFromString(str, "text/xml").getElementsByTagName('event'))
-    setEventInfo(allEvents)
-    console.log(eventInfo)
+    const str = parser.parseFromString(events, "application/xml");
+    console.log(xml2json(str));
 
   }
+
 
 
 
