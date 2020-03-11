@@ -4,14 +4,14 @@ import './App.css';
 
 function App() {
 
-  const [events, setEvents] = useState("")
-  const [eventInfo, setEventInfo] = useState("")
+  const [searchResults, setSearchResults] = useState("")
+  const [eventInfo, setEventInfo] = useState([])
 
   useEffect(() => {
 
       const xmlInfo = fetch('http://api.eventful.com/rest/events/search?&app_key=4qgTBpXfK99TR8Qk&keywords=books&location=San+Diego&date=Future')
         .then(res => res.text())
-        .then(data => setEvents(data))
+        .then(data => setSearchResults(data))
 
   }
 
@@ -50,8 +50,12 @@ return jsonResult;
 
   const handleClick = (evt) => {
     const parser = new DOMParser()
-    const str = parser.parseFromString(events, "application/xml");
-    console.log(xml2json(str));
+    const str = parser.parseFromString(searchResults, "application/xml");
+    let newObj = xml2json(str)
+    setEventInfo(newObj.search.events)
+    console.log(eventInfo)
+
+
 
   }
 
@@ -70,7 +74,11 @@ return jsonResult;
 
       </div>
       <div onClick={handleClick} className="mainContainer">
+      {eventInfo === [] || eventInfo.event === undefined ? null : eventInfo.event.map((name) => {return <p>{name.title}</p>})}
 
+      </div>
+
+      <div>
 
       </div>
 
