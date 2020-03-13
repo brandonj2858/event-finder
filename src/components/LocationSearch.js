@@ -1,22 +1,17 @@
 import React, {useState, useEffect} from 'react';
-
+import '../App.css';
 
 
 const LocationSearch = () => {
 
-  const [searchResults, setSearchResults] = useState([])
-  const [eventInfo, setEventInfo] = useState([])
+  const [searchResults, setSearchResults] = useState([]);
+  const [eventInfo, setEventInfo] = useState([]);
+  const [cityInput, setCityInput] = useState('');
+  const [eventInput, setEventInput] = useState('');
 
   useEffect(() => {
-      const parser = new DOMParser()
-      const xmlInfo = fetch('http://api.eventful.com/rest/events/search?&app_key=4qgTBpXfK99TR8Qk&keywords=books&location=San+Diego&date=Future')
-        .then(res => res.text())
-        .then(data => parser.parseFromString(data, "application/xml"))
-        .then(obj => {
-          let data = xml2json(obj);
-          let eventsObj = data.search.events
-          setEventInfo(eventsObj);
-        });
+      //just a search used for practice
+      console.log('hello');
 
 
   }
@@ -54,24 +49,47 @@ if (childIsArray) {
 return jsonResult;
 }
 
-/*
-  const handleClick = (evt) => {
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
     const parser = new DOMParser()
-    const str = parser.parseFromString(searchResults, "application/xml");
-    let newObj = xml2json(str);
-    console.log(newObj);
-    setEventInfo(newObj.search.events);
-    console.log(eventInfo)
+    console.log(cityInput, eventInput)
+    const xmlInfo = fetch(`http://api.eventful.com/rest/events/search?&app_key=4qgTBpXfK99TR8Qk&keywords=${eventInput}&location=${cityInput}&date=Future&sort_order=date`)
+      .then(res => res.text())
+      .then(data => parser.parseFromString(data, 'application/xml'))
+      .then(obj => {
+        let data = xml2json(obj);
+        let eventsObj = data.search.events
+        console.log(data.search);
+        setEventInfo(eventsObj)
+      })
+      console.log(eventInfo);
 
 
-
-  }*/
+  }
 
 
 
   return (
     <div>
-    {eventInfo === [] || eventInfo.event === undefined ? null : eventInfo.event.map((name) => {return <p>{name.title}</p>})}
+    <div className="searchContainer">
+
+    <form onSubmit={handleSubmit}>
+
+      <input type="text" onChange={(evt) => setCityInput(evt.target.value)} placeholder="City"/>
+      <br/>
+      <input type="text" onChange={(evt) => setEventInput(evt.target.value)} placeholder="Event"/>
+      <br/>
+      <input type="submit"/>
+
+    </form>
+
+    </div>
+
+    <div className="resultsContainer">
+    {eventInfo === [] || eventInfo.event === undefined ? null : eventInfo.event.map((name) => {return <li className="resultsList">{name.title}</li>})}
+    </div>
+
 
     </div>
 

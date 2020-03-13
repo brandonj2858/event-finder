@@ -61,9 +61,27 @@
 }
 
 .mainContainer {
-  
+
   background-color: #eeeeeef2;
   height: 50vw;
   width: 80vw;
   border-radius: 15px;
+}
+
+.resultsList {
+  list-style: none;
+  padding: 10px;
+  width: 85%;
+
+}
+
+.resultsList:hover {
+  font-size: 60px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  border-radius: 10px;
+
+}
+
+.resultsContainer {
+  padding-top: 50px;
 }
