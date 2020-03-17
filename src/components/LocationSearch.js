@@ -78,6 +78,7 @@ return jsonResult;
 
       <input type="text" onChange={(evt) => setCityInput(evt.target.value)} placeholder="City"/>
       <br/>
+      <br/>
       <input type="text" onChange={(evt) => setEventInput(evt.target.value)} placeholder="Event"/>
       <br/>
       <input type="submit"/>
