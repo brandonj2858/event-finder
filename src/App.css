@@ -64,6 +64,7 @@
 
   background-color: #eeeeeef2;
   height: 50vw;
+  overflow: scroll;
   width: 80vw;
   border-radius: 15px;
 }

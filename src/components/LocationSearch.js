@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import '../App.css';
+
 
 
 const LocationSearch = () => {
@@ -8,6 +8,7 @@ const LocationSearch = () => {
   const [eventInfo, setEventInfo] = useState([]);
   const [cityInput, setCityInput] = useState('');
   const [eventInput, setEventInput] = useState('');
+  const [pageCount, setPageCount] = useState(1)
 
   useEffect(() => {
       //just a search used for practice
@@ -52,9 +53,10 @@ return jsonResult;
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    setPageCount(0)
     const parser = new DOMParser()
     console.log(cityInput, eventInput)
-    const xmlInfo = fetch(`http://api.eventful.com/rest/events/search?&app_key=4qgTBpXfK99TR8Qk&keywords=${eventInput}&location=${cityInput}&date=Future&sort_order=date`)
+    const xmlInfo = fetch(`http://api.eventful.com/rest/events/search?&app_key=4qgTBpXfK99TR8Qk&keywords=${eventInput}&location=${cityInput}&date=Future&sort_order=date&page_size=10`)
       .then(res => res.text())
       .then(data => parser.parseFromString(data, 'application/xml'))
       .then(obj => {
@@ -67,6 +69,27 @@ return jsonResult;
 
 
   }
+
+  const nextPage = (evt) => {
+    evt.preventDefault();
+    let newCount = pageCount + 1
+    setPageCount(newCount)
+    const parser = new DOMParser()
+    console.log(cityInput, eventInput)
+    const xmlInfo = fetch(`http://api.eventful.com/rest/events/search?&app_key=4qgTBpXfK99TR8Qk&keywords=${eventInput}&location=${cityInput}&date=Future&sort_order=date&page_number=${pageCount}`)
+      .then(res => res.text())
+      .then(data => parser.parseFromString(data, 'application/xml'))
+      .then(obj => {
+        let data = xml2json(obj);
+        let eventsObj = data.search.events
+        console.log(data.search);
+        setEventInfo(eventsObj)
+      })
+      console.log(eventInfo);
+
+  }
+
+
 
 
 
@@ -89,6 +112,7 @@ return jsonResult;
 
     <div className="resultsContainer">
     {eventInfo === [] || eventInfo.event === undefined ? null : eventInfo.event.map((name) => {return <li className="resultsList">{name.title}</li>})}
+    {eventInfo === [] || eventInfo.event === undefined ? null : <button onClick={nextPage} type="submit">Next Page</button>}
     </div>
 
 
