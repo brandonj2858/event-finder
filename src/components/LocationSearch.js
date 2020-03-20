@@ -53,7 +53,7 @@ return jsonResult;
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    setPageCount(0)
+    setPageCount(1)
     const parser = new DOMParser()
     console.log(cityInput, eventInput)
     const xmlInfo = fetch(`http://api.eventful.com/rest/events/search?&app_key=4qgTBpXfK99TR8Qk&keywords=${eventInput}&location=${cityInput}&date=Future&sort_order=date&page_size=10`)
@@ -75,8 +75,7 @@ return jsonResult;
     let newCount = pageCount + 1
     setPageCount(newCount)
     const parser = new DOMParser()
-    console.log(cityInput, eventInput)
-    const xmlInfo = fetch(`http://api.eventful.com/rest/events/search?&app_key=4qgTBpXfK99TR8Qk&keywords=${eventInput}&location=${cityInput}&date=Future&sort_order=date&page_number=${pageCount}`)
+    const xmlInfo = fetch(`http://api.eventful.com/rest/events/search?&app_key=4qgTBpXfK99TR8Qk&keywords=${eventInput}&location=${cityInput}&date=Future&sort_order=date&page_number=${pageCount + 1}`)
       .then(res => res.text())
       .then(data => parser.parseFromString(data, 'application/xml'))
       .then(obj => {
