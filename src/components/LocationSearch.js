@@ -8,7 +8,8 @@ const LocationSearch = () => {
   const [eventInfo, setEventInfo] = useState([]);
   const [cityInput, setCityInput] = useState('');
   const [eventInput, setEventInput] = useState('');
-  const [pageCount, setPageCount] = useState(1)
+  const [totalPages, setTotalPages] = useState('')
+  const [pageCount, setPageCount] = useState(1);
 
   useEffect(() => {
       //just a search used for practice
@@ -63,9 +64,10 @@ return jsonResult;
         let data = xml2json(obj);
         let eventsObj = data.search.events
         console.log(data.search);
+        setTotalPages(data.search.page_count)
         setEventInfo(eventsObj)
       })
-      console.log(eventInfo);
+
 
 
   }
@@ -82,9 +84,10 @@ return jsonResult;
         let data = xml2json(obj);
         let eventsObj = data.search.events
         console.log(data.search);
+
         setEventInfo(eventsObj)
       })
-      console.log(eventInfo);
+
 
   }
 
@@ -111,7 +114,7 @@ return jsonResult;
 
     <div className="resultsContainer">
     {eventInfo === [] || eventInfo.event === undefined ? null : eventInfo.event.map((name) => {return <li className="resultsList">{name.title}</li>})}
-    {eventInfo === [] || eventInfo.event === undefined ? null : <button onClick={nextPage} type="submit">Next Page</button>}
+    {eventInfo === [] || pageCount >= totalPages ? null : <button onClick={nextPage} type="submit">Next Page</button>}
     </div>
 
 
