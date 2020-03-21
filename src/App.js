@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import LocationSearch from './components/LocationSearch';
+import VenueSearch from './components/VenueSearch'
 import HomePage from './components/HomePage'
 
 function App() {
@@ -22,9 +23,9 @@ function App() {
         <li className="navLinkLI"><Link className="navLink" to="/location">Location</Link></li>
       </ul>
 
+    <div  className="mainContainer">
       <Switch>
 
-      <div  className="mainContainer">
 
 
 
@@ -37,12 +38,13 @@ function App() {
         <HomePage/>
         </Route>
 
-        <Route>
-
+        <Route path="/venue">
+        <VenueSearch/>
         </Route>
 
-      </div>
+
       </Switch>
+    </div>
 
       </div>
     </Router>
