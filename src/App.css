@@ -82,8 +82,20 @@
 
 }
 
+.changePageArea {
+  display: flex;
+}
+
 .venueSearchContainer {
   padding: 100px;
+}
+
+.nextButton {
+  margin-left: auto;
+}
+
+.prevButton {
+
 }
 
 .resultsList {

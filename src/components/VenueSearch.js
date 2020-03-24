@@ -31,6 +31,7 @@ const VenueSearch = () => {
 
       )
 
+
   }
 
   const handleNext = (evt) => {
@@ -40,6 +41,17 @@ const VenueSearch = () => {
       ...state,
       index: prevIndex + 10
     })
+    console.log(state.venuesList)
+  }
+
+  const handlePrevious = (evt) => {
+    evt.preventDefault();
+    let prevIndex = state.index;
+    setState({
+      ...state,
+      index: prevIndex - 10
+    })
+
   }
 
 
@@ -57,8 +69,13 @@ const VenueSearch = () => {
     </div>
 
     <div className="resultsArea">
-    {state.venuesList === [] || state.venuesList.length === 0 ? null : state.venuesList.venue.slice(state.index, state.index + 10).map((ven) => {return <p>{ven.name}, {state.index}</p>})}
-    {state.venuesList === [] || state.venuesList.length === 0 ? null : state.venuesList.venue.length === undefined || state.index + 11 > state.venuesList.venue.length ? null : <button onClick={handleNext}>Next Page</button>}
+    {state.venuesList === [] || state.venuesList.length === 0 ? null : state.venuesList.venue.slice(state.index, state.index + 10).map((ven) => {return <p><strong>Venue Name</strong>: {ven.name} <strong>Venue Location</strong>: {ven.address === null ? "": ven.address + ","} {ven.city_name}, {ven.region_abbr} </p>})}
+
+    <div className="changePageArea">
+    {state.venuesList === [] || state.venuesList.length === 0 ? null : state.venuesList.venue.length === undefined || state.index >= 10 ? <button className="prevButton" onClick={handlePrevious} >Previous Page</button> : null }
+    {state.venuesList === [] || state.venuesList.length === 0 ? null : state.venuesList.venue.length === undefined || state.index + 11 > state.venuesList.venue.length ? null : <button className="nextButton" onClick={handleNext}>Next Page</button>}
+    </div>
+
     </div>
 
 
