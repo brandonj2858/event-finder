@@ -75,7 +75,6 @@ return jsonResult;
   const nextPage = (evt) => {
     evt.preventDefault();
     let newCount = pageCount + 1
-    setPageCount(newCount)
     const parser = new DOMParser()
     const xmlInfo = fetch(`http://api.eventful.com/rest/events/search?&app_key=4qgTBpXfK99TR8Qk&keywords=${eventInput}&location=${cityInput}&date=Future&sort_order=date&page_number=${pageCount + 1}`)
       .then(res => res.text())
@@ -84,11 +83,23 @@ return jsonResult;
         let data = xml2json(obj);
         let eventsObj = data.search.events
         console.log(data.search);
-
+        setPageCount(newCount)
         setEventInfo(eventsObj)
       })
+  }
 
+  const previousPage = (evt) => {
+    evt.preventDefault();
 
+    let parser = new DOMParser();
+    fetch(`http://api.eventful.com/rest/events/search?&app_key=4qgTBpXfK99TR8Qk&keywords=${eventInput}&location=${cityInput}&date=Future&sort_order=date&page_number=${pageCount - 1}`)
+      .then(res => res.text())
+      .then(data => parser.parseFromString(data, 'application/xml'))
+      .then(obj => {
+        let data = xml2json(obj)
+        setEventInfo(data.search.events)
+        setPageCount(pageCount - 1)
+      })
   }
 
 
@@ -114,7 +125,12 @@ return jsonResult;
 
     <div className="resultsContainer">
     {eventInfo === [] || eventInfo.event === undefined ? null : eventInfo.event.map((name) => {return <li className="resultsList">{name.title}</li>})}
-    {eventInfo === [] || pageCount >= totalPages ? null : <button onClick={nextPage} type="submit">Next Page</button>}
+
+    <div className="changePageArea">
+    {eventInfo === [] || eventInfo === undefined ? null : pageCount === 1 ? null : <button className="prevButton" onClick={previousPage}>Previous Page</button>}
+    {eventInfo === [] || pageCount >= totalPages ? null : <button onClick={nextPage} className="nextButton" type="submit">Next Page</button>}
+    </div>
+
     </div>
 
 
