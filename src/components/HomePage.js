@@ -8,7 +8,8 @@ const HomePage = () => {
 
   return (
     <div>
-      Yellow
+      <h1>Event Track</h1>
+      <h3>Finding The Best Events Near You!</h3>
     </div>
 
 

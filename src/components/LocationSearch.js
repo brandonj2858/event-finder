@@ -124,7 +124,7 @@ return jsonResult;
     </div>
 
     <div className="resultsContainer">
-    {eventInfo === [] || eventInfo.event === undefined ? null : eventInfo.event.map((name) => {return <li className="resultsList">{name.title}</li>})}
+    {eventInfo === [] || eventInfo.event === undefined ? null : eventInfo.event.map((name) => {return <li key={name.id} className="resultsList">{name.title}</li>})}
 
     <div className="changePageArea">
     {eventInfo === [] || eventInfo === undefined ? null : pageCount === 1 ? null : <button className="prevButton" onClick={previousPage}>Previous Page</button>}

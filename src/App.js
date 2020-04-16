@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import LocationSearch from './components/LocationSearch';
 import VenueSearch from './components/VenueSearch'
 import HomePage from './components/HomePage'
+import VenueItem from './components/VenueItem'
 
 function App() {
 
@@ -19,8 +20,9 @@ function App() {
       <div className="navBar">
       <ul className="NavLinksUl">
         <li className="navLinkLI"><Link className="navLink" to="/home">Home</Link></li>
-        <li className="navLinkLI"><Link className="navLink" to="/venue">Venue</Link></li>
+        <li className="navLinkLI"><Link className="navLink" to="/venue-search">Venue</Link></li>
         <li className="navLinkLI"><Link className="navLink" to="/location">Location</Link></li>
+
       </ul>
 
     <div  className="mainContainer">
@@ -38,10 +40,13 @@ function App() {
         <HomePage/>
         </Route>
 
-        <Route path="/venue">
+        <Route path="/venue-search">
         <VenueSearch/>
         </Route>
 
+        <Route exact path='/venue/:id' >
+          <VenueItem/>
+        </Route>
 
       </Switch>
     </div>

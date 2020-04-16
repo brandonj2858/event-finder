@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import VenueItem from './VenueItem';
+
 
 
 const VenueSearch = () => {
@@ -7,6 +9,7 @@ const VenueSearch = () => {
     venueType: "",
     venuesList: [],
     index: 0,
+    selectedVenue: null,
   });
 
 
@@ -54,6 +57,18 @@ const VenueSearch = () => {
 
   }
 
+  const handleClick = (evt) => {
+    evt.preventDefault();
+    console.log(evt.target.id);
+    let userChoice = state.venuesList.venue.find((ven) => ven.id === evt.target.id)
+    console.log(userChoice);
+    setState({
+      ...state,
+      selectedVenue: userChoice
+    })
+
+  }
+
 
   return (
     <div className="venueSearchContainer">
@@ -69,14 +84,18 @@ const VenueSearch = () => {
     </div>
 
     <div className="resultsArea">
-    {state.venuesList === [] || state.venuesList.length === 0 ? null : state.venuesList.venue.slice(state.index, state.index + 10).map((ven) => {return <p><strong>Venue Name</strong>: {ven.name} <strong>Venue Location</strong>: {ven.address === null ? "": ven.address + ","} {ven.city_name}, {ven.region_abbr} </p>})}
+    {state.venuesList === [] || state.venuesList.length === 0 ? null : state.venuesList.venue.slice(state.index, state.index + 10).map((ven) => {return <li key={ven.id} id={ven.id} onClick={handleClick} className="resultsList"><strong>Venue Name</strong>: {ven.name} <strong>Venue Location</strong>: {ven.address === null ? "": ven.address + ","} {ven.city_name}, {ven.region_abbr}</li>})}
+
 
     <div className="changePageArea">
     {state.venuesList === [] || state.venuesList.length === 0 ? null : state.venuesList.venue.length === undefined || state.index >= 10 ? <button className="prevButton" onClick={handlePrevious} >Previous Page</button> : null }
     {state.venuesList === [] || state.venuesList.length === 0 ? null : state.venuesList.venue.length === undefined || state.index + 11 > state.venuesList.venue.length ? null : <button className="nextButton" onClick={handleNext}>Next Page</button>}
     </div>
 
+    {state.selectedVenue ? <VenueItem venue={state.selectedVenue} /> : null } 
+
     </div>
+
 
 
     </div>
