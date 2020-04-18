@@ -10,6 +10,7 @@ const VenueSearch = () => {
     venuesList: [],
     index: 0,
     selectedVenue: null,
+    sortedByEvents: []
   });
 
 
@@ -69,6 +70,18 @@ const VenueSearch = () => {
 
   }
 
+  const sortByCount = (evt) => {
+
+    let sortedList = state.venuesList.sort((a,b) => {
+    return (b.venue.event_count - a.venue.event_count)
+    })
+    console.log(sortedList)
+    setState({
+      ...state,
+      venuesList: sortedList
+    })
+  }
+
 
   return (
     <div className="venueSearchContainer">
@@ -84,6 +97,13 @@ const VenueSearch = () => {
     </div>
 
     <div className="resultsArea">
+    <div className="sortingArea">
+    <select onChange={sortByCount}>
+      <option >Event Count</option>
+      <option>A-Z</option>
+    </select>
+    </div>
+
     {state.venuesList === [] || state.venuesList.length === 0 ? null : state.venuesList.venue.slice(state.index, state.index + 10).map((ven) => {return <li key={ven.id} id={ven.id} onClick={handleClick} className="resultsList"><strong>Venue Name</strong>: {ven.name} <strong>Venue Location</strong>: {ven.address === null ? "": ven.address + ","} {ven.city_name}, {ven.region_abbr}</li>})}
 
 
@@ -92,7 +112,7 @@ const VenueSearch = () => {
     {state.venuesList === [] || state.venuesList.length === 0 ? null : state.venuesList.venue.length === undefined || state.index + 11 > state.venuesList.venue.length ? null : <button className="nextButton" onClick={handleNext}>Next Page</button>}
     </div>
 
-    {state.selectedVenue ? <VenueItem venue={state.selectedVenue} /> : null } 
+    {state.selectedVenue ? <VenueItem venue={state.selectedVenue} /> : null }
 
     </div>
 

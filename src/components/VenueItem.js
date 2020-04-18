@@ -6,12 +6,12 @@ const VenueItem = (props) => {
   console.log(props)
 
   return (
-    <div>
-    {props.venue.name}
-    {props.venue.address}
-    {props.venue.city_name}
-    {props.venue.region_name}
-    {props.venue.country_name}
+    <div className="venueInfo">
+    <strong>Venue Name</strong>: {props.venue.name}
+    <br/>
+    <strong>Address</strong>: {props.venue.address} {props.venue.city_name}, {props.venue.region_name}, {props.venue.country_abbr}
+    <strong>Upcoming Events</strong>:
+    <strong>Venue Link</strong>:
 
     </div>
   )

@@ -112,6 +112,14 @@
   cursor: pointer;
 }
 
+.venueInfo {
+  text-align: left;
+  width: 90%;
+  padding-left: 10px;
+  border-radius: 3px;
+  background-color: white;
+}
+
 .resultsList:hover {
   font-size: 40px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
